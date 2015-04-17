@@ -50,8 +50,14 @@ func main() {
 			if err != nil {
 				fmt.Println("Could not find that contact")
 			}
-			fmt.Print(c.Address)
-			exec.Command("/bin/sh", "ssh "+c.Address)
+			cmd := exec.Command("ssh", string(c.Address))
+			cmd.Stderr = os.Stderr
+			cmd.Stdin = os.Stdin
+			cmd.Stdout = os.Stdout
+			err2 := cmd.Run()
+			if err2 != nil {
+				fmt.Print("Disconnected")
+			}
 		}
 		if c.String("new") != "" {
 			reader := bufio.NewReader(os.Stdin)
