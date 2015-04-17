@@ -12,6 +12,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"os/exec"
 	"strings"
 )
 
@@ -50,6 +51,7 @@ func main() {
 				fmt.Println("Could not find that contact")
 			}
 			fmt.Print(c.Address)
+			exec.Command("/bin/sh", "ssh "+c.Address)
 		}
 		if c.String("new") != "" {
 			reader := bufio.NewReader(os.Stdin)
